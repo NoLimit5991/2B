@@ -32,21 +32,34 @@ def reset_2b():
 
 	print("Resetting 2B")
 
-	# Zero out channel a power
+	# Do this first because setting power resets all settings
+	# Power (L or H) - high
+	print("High power")
+	ser.write(bytearray("H\r", 'ascii'))
+	time.sleep(1)
+	
+	# Reset channel a power
 	print("Zero out A")
 	output = bytearray("A0" + "\r", 'ascii')
 	ser.write(output)
 	time.sleep(1)
 
-	# Zero out channel b power
+	# Reset channel b power
 	print("Zero out B")
 	output = bytearray("B0" + "\r", 'ascii')
 	ser.write(output)
 	time.sleep(1)
 
-	# Power (L or H) - high
-	print("High power")
-	ser.write(bytearray("H\r", 'ascii'))
+	# Reset channel C
+	print("Reset C")
+	output = bytearray("C50" + "\r", 'ascii')
+	ser.write(output)
+	time.sleep(1)
+
+	# Reset channel D
+	print("Reset D")
+	output = bytearray("D50" + "\r", 'ascii')
+	ser.write(output)
 	time.sleep(1)
 
 	print(" ")
@@ -166,9 +179,9 @@ def run_up(strt, fin):
 		# ramp up
 		ramp_do(0, adj_lvl, 20, 10)
 
-		# stay on for 90 seconds (1 cycle)
-		print("Run for 90 seconds")
-		time.sleep(90)
+		# stay on for 82 seconds (1 cycle)
+		print("Run for 82 seconds")
+		time.sleep(82)
 
 		# ramp down
 		ramp_do(adj_lvl, 0, 10, 5)
